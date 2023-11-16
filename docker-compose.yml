@@ -1,0 +1,43 @@
+# まとめて起動
+version: '3'
+services:
+  db:
+    container_name: pocke-caree-mysql
+    build:
+      dockerfile: docker/database/Dockerfile
+      context: .
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - "3316:3306"
+    networks:
+      - app-net
+    platform: linux/arm64
+  
+  backend:
+    container_name: pocke-caree-backend
+    build:
+      dockerfile: docker/backend/Dockerfile
+      context: .
+    ports:
+      - "5016:5000"
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    tty: true
+    # command: python ./src/app.py
+    networks:
+      - app-net
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  db_data:
+
+networks:
+  app-net:
+    driver: bridge
