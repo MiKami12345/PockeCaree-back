@@ -28,7 +28,7 @@ services:
         source: ./
         target: /app
     tty: true
-    # command: python ./src/app.py
+    command: python ./src/app.py
     networks:
       - app-net
     depends_on:
