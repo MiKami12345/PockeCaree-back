@@ -37,6 +37,7 @@ def init_db():
                 companyName VARCHAR(255) NOT NULL,
                 memo VARCHAR(255),
                 status int NOT NULL,
+                mypageURL VARCHAR(255),
                 PRIMARY KEY (CompanyID)
             );
         '''
