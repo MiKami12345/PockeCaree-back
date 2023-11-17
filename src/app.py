@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import database.db as db
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://your_database_user:your_database_password@localhost/your_database_name'
+CORS(app)
 
 @app.route("/test", methods=['GET', 'POST'])
 def getTest():
