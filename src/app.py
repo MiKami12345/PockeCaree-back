@@ -22,10 +22,9 @@ def getTest():
 @app.route("/company", methods=['POST'])
 def add_company_controller():
   newCompany = CreateCompanyRequestParam(**request.json)
-
   
-
-  return 404
+  addNewCompanyLogic(newCompany)
+  return jsonify({}), 200
 
 # 企業のステータスを変更する
 @app.route("/company/status", methods=['POST'])
