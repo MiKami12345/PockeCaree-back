@@ -44,6 +44,16 @@ def update_company_status():
   print("update company status.")
 
 def get_company_by_userID(userID: int):
+  cursor, cnx = _connectDB()
+
+  sql = '''SELECT * FROM Company WHERE userID = %s'''
+  cursor.execute(sql, (groupID, ))
+  groupInfo = cursor.fetchone()
+
+  cursor.close()
+  cnx.close()
+
+  return groupInfo
   # TODO
   return
 

@@ -38,6 +38,7 @@ def init_db():
                 memo VARCHAR(255),
                 status int NOT NULL,
                 mypageURL VARCHAR(255),
+                userID VARCHAR(255),
                 PRIMARY KEY (CompanyID)
             );
         '''

@@ -4,6 +4,9 @@ from flask_cors import CORS
 import database.db as db
 from models.companyInfo import CreateCompanyRequestParam
 
+from logic.addNewCompanyLogic import addNewCompanyLogic
+from logic.getCompanyLogic import getCompanyLogic
+
 app = Flask(__name__)
 CORS(app)
 
@@ -32,8 +35,29 @@ def update_company_status_controller():
   return 404
 
 # 企業情報取得する
+# localhost:5000/company?id=1
 @app.route("/company", methods=['GET'])
 def get_company_controller():
+  try:
+    # req = request.args
+    # user_id = req.get("userId")
+    userId = 1
+
+    try:
+      return jsonify(getCompanyLogic(userId)), 200
+    except Exception as e:
+      print(e)
+      return 404
+
+
+  # 企業情報のサマリーを返す
+  
+  # 企業IDを受け取って、その企業の詳細情報を返す
+  except Exception as e:
+    print(e)
+    return 500
+
+  
   return 404
 
 
