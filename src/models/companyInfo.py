@@ -22,3 +22,8 @@ class CompanyInfoResponseParam:
     self.mypageURL = mypageURL
     self.memo = memo
     self.status = status
+
+class ChangeCompanyStatusRequestParam:
+  def __init__(self, newStatus: int, companyID: str) -> None:
+    self.newStatus = newStatus
+    self.companyID = companyID

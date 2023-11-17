@@ -32,7 +32,11 @@ def add_company_controller():
 # 企業のステータスを変更する
 @app.route("/company/status", methods=['POST'])
 def update_company_status_controller():
-  return 404
+  newStatusObj = ChangeCompanyStatusRequestParam(**request.json)
+
+  updateCompanyStatusLogic(newStatusObj)
+
+  return jsonify({}), 200
 
 # 企業情報取得する
 # localhost:5000/company?id=1

@@ -1,6 +1,6 @@
 from database.db import _connectDB
 
-from models.companyInfo import CreateCompanyRequestParam
+from models.companyInfo import CreateCompanyRequestParam, ChangeCompanyStatusRequestParam
 
 def insert_company(newCompany: CreateCompanyRequestParam, companyID: str):
   try:
@@ -21,15 +21,6 @@ def insert_company(newCompany: CreateCompanyRequestParam, companyID: str):
       "1",
     ))
     cnx.commit()
-
-    # for debug
-    sql = '''
-      SELECT * FROM Company
-      WHERE companyID = %s
-    '''
-
-    cursor.execute(sql, (companyID, ))
-    print(cursor.fetchall()[0])
   except Exception as e:
     print(f"Error in insert_company(): {e}")
   finally:
@@ -39,23 +30,43 @@ def insert_company(newCompany: CreateCompanyRequestParam, companyID: str):
   
   return
 
-def update_company_status():
-  # TODO
-  print("update company status.")
+def update_company_status(newStatus: ChangeCompanyStatusRequestParam):
+  print(newStatus.companyID)
+  try:
+    cursor, cnx = _connectDB()
 
-def get_company_by_userID(userID: int):
+    sql = ('''
+      UPDATE Company
+      SET status=%s
+      WHERE companyID=%s
+    ''')
+
+    cursor.execute(sql, (
+      newStatus.newStatus,
+      newStatus.companyID,
+    ))
+    cnx.commit()
+
+  except Exception as e:
+    print(f"Error in update_company_status(): {e}")
+  finally:
+    cursor.close()
+    if cnx is not None and cnx.is_connected:
+      cnx.close()
+  
+  return
+
+def get_company_by_userID(userID: str):
   cursor, cnx = _connectDB()
 
   sql = '''SELECT * FROM Company WHERE userID = %s'''
-  cursor.execute(sql, (groupID, ))
-  groupInfo = cursor.fetchone()
+  cursor.execute(sql, (userID, ))
+  companyInfo = cursor.fetchall()
 
   cursor.close()
   cnx.close()
 
-  return groupInfo
-  # TODO
-  return
+  return companyInfo
 
 def get_company_by_companyID():
 
