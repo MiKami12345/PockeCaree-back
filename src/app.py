@@ -6,7 +6,7 @@ from models.companyInfo import CreateCompanyRequestParam, ChangeCompanyStatusReq
 from models.scheduleInfo import CreateScheduleRequestParam
 
 from logic.addNewCompanyLogic import addNewCompanyLogic
-from logic.getCompanyLogic import getCompanyLogicByUserID
+from logic.getCompanyLogic import getCompanyLogicByUserID, getCompanyLogicByCompanyID
 from logic.updateCompanyStatusLogic import updateCompanyStatusLogic
 
 from logic.addNewScheduleLogic import addNewScheduleLogic
@@ -49,16 +49,14 @@ def update_company_status_controller():
 # 企業IDを受け取って、その企業の詳細情報を返す
 @app.route("/company", methods=['GET'])
 def get_company_controller():
-  # req = request.args
-  # user_id = req.get("userID")
-  userID = '1'
-  companys = getCompanyLogicByUserID(userID)
-
-  return jsonify(companys), 200
-
-
-
-  
+  if request.args.get("userID") is not None:
+    companys = getCompanyLogicByUserID(request.args.get("userID"))
+    return jsonify(companys), 200
+  elif request.args.get("companyID") is not None:
+    company = getCompanyLogicByCompanyID(request.args.get("companyID"))
+    return jsonify(company), 200
+  else:
+    return jsonify({}), 400
 
 
 # 予定に関するAPI
@@ -73,13 +71,11 @@ def add_schedule_controller():
 # 予定を取得して返す
 @app.route("/schedule", methods=['GET'])
 def get_schedule_controller():
-  req = request.args
-  companyID = req.get("companyID")
-  print(companyID)
-
-  schedules = getScheduleLogic(companyID)
-
-  return jsonify(schedules), 200
+  if request.args.get("companyID") is not None:
+    schedules = getScheduleLogic(request.args.get("companyID"))
+    return jsonify(schedules), 200
+  else:
+    return jsonify({}), 400
   
 if __name__ == '__main__':
   db.init_db()

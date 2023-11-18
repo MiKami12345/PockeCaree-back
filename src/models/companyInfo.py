@@ -17,11 +17,12 @@ class CompanySummaryResponseParam:
 
 # 詳細ページ
 class CompanyInfoResponseParam:
-  def __init__(self, companyName: str, mypageURL: str, memo: str, status: int) -> None:
+  def __init__(self, companyName: str, mypageURL: str, memo: str, status: int, schedules: list) -> None:
     self.companyName = companyName
     self.mypageURL = mypageURL
     self.memo = memo
     self.status = status
+    self.schedules = schedules
 
 class ChangeCompanyStatusRequestParam:
   def __init__(self, newStatus: int, companyID: str) -> None:

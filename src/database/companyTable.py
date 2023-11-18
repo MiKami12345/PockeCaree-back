@@ -68,7 +68,15 @@ def get_company_by_userID(userID: str):
 
   return companyInfo
 
-def get_company_by_companyID():
+def get_company_by_companyID(companyID: str):
+  cursor, cnx = _connectDB()
 
-  # TODO
-  return
+  sql = '''SELECT * FROM Company WHERE companyID = %s'''
+  cursor.execute(sql, (companyID, ))
+  companyInfo = cursor.fetchall()[0]
+
+  cursor.close()
+  cnx.close()
+
+  print(companyInfo)
+  return companyInfo

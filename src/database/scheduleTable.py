@@ -39,6 +39,7 @@ def get_schedules_by_companyID(companyID: str):
     sql = ('''
       SELECT * FROM Schedule
       WHERE companyID = %s
+      ORDER BY startDate
     ''')
 
     cursor.execute(sql, (companyID, ))
